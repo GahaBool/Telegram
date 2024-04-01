@@ -1,5 +1,5 @@
-from aiogram import types, Router
-from aiogram.filters import Command
+from aiogram import F, types, Router
+from aiogram.filters import Command, or_f
 
 user_private_router = Router()
 
@@ -11,14 +11,15 @@ async def start_cmd(message: types.Message):
 async def start_cmd(message: types.Message):
     await message.answer(f"your information: {message.from_user}")
 
+@user_private_router.message(or_f(Command("menu"), (F.text.lower().contains("меню"))))
+async def start_cmd(message: types.Message):
+    await message.answer("Меню: ")
+
 @user_private_router.message(Command("donat"))
 async def start_cmd(message: types.Message):
     await message.answer("Вариант доната:")
 
-@user_private_router.message()
-async def Message_User(message: types.Message):
-    text = message.text
+@user_private_router.message(F.text.lower().contains("cipi"))
+async def start_cmd(message: types.Message):
+    await message.answer_sticker("CAACAgIAAxkBAAEEXH9mBlUbKgNZ7VdNc4Ss4DhWAZn9DAAC3DoAAsTYgUhE2KXpN0MXpzQE")
 
-    for i in range(3):
-        if text == "cipi cipi capa capa":
-            await Bot.send_sticker(chat_id=message.chat.id, sticker="CAACAgIAAxkBAAEEXH9mBlUbKgNZ7VdNc4Ss4DhWAZn9DAAC3DoAAsTYgUhE2KXpN0MXpzQE")
