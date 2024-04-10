@@ -2,12 +2,14 @@ from aiogram import F, types, Router
 from aiogram.filters import Command, or_f
 from filters.chat_types import ChatTypesFilter
 
+from keybs import reply
+
 user_private_router = Router()
 user_private_router.message.filter(ChatTypesFilter(['private']))
 
 @user_private_router.message(Command("start"))
 async def start_cmd(message: types.Message):
-    await message.answer(f"Hello {message.from_user.first_name}")
+    await message.answer("Hello", reply_markup=reply.start_kb)
 
 @user_private_router.message(Command("information"))
 async def start_cmd(message: types.Message):
