@@ -18,10 +18,18 @@ async def start_cmd(message: types.Message):
 @user_private_router.message(or_f(Command("menu"), (F.text.lower().contains("меню"))))
 async def start_cmd(message: types.Message):
     await message.answer("Меню: ")
-
+@user_private_router.message(or_f(Command("donat"), (F.text.lower().contains("donat"))))
 @user_private_router.message(Command("donat"))
 async def start_cmd(message: types.Message):
-    await message.answer("Вариант доната:")
+
+    text = as_marked_section(
+        Bold("Варианты доната:"),
+        "Картой в боте",
+        "При получении карта/кэш",
+        "В заведении",
+        marker=""
+    )
+    await message.answer(text.as_html)
 
 @user_private_router.message(F.text.lower().contains("cipi"))
 async def start_cmd(message: types.Message):
